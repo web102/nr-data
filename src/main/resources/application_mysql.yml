@@ -1,0 +1,23 @@
+server:
+  port: 8000  #tomcat启动端口
+spring:
+  application:
+    name: mysql-data # 服务名称全部小写
+#####################################################################################################
+# mysql 属性配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://10.172.246.98:3306/ias
+    url: jdbc:mysql://10.172.246.234:3306/ias
+    username: root
+    password: bobandata123
+#####################################################################################################
+# 打印日志
+logging:
+  level:
+    root: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
+    com.springms: DEBUG
+#####################################################################################################
