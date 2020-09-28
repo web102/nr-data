@@ -1,6 +1,6 @@
 package com.bobandata.iot.basedb.repository;
 
-import com.bobandata.iot.basedb.bean.Param_model_set;
+import com.bobandata.iot.entity.dms.Param_model_set;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -1,10 +1,9 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.basedb.bean.Instruct;
+import com.bobandata.iot.entity.dms.Instruct;
 import com.bobandata.iot.basedb.repository.InstructRepository;
 import com.bobandata.iot.basedb.service.InstructService;
-import com.bobandata.iot.basedb.service.Instruct_model_setService;
-import com.bobandata.iot.basedb.service.Instruct_protocol_setService;
+import com.bobandata.iot.basedb.service.InstructProtocolSetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,9 +27,7 @@ public class InstructServiceImpl extends BaseServiceImpl<Instruct, Integer> impl
     @Autowired
     private InstructRepository instructRepository;
     @Autowired
-    private Instruct_model_setService imsService;
-    @Autowired
-    private Instruct_protocol_setService ipsService;
+    private InstructProtocolSetService ipsService;
 
     @Override
     public Page<Instruct> selectPageList(Pageable pageable) {
@@ -58,21 +55,16 @@ public class InstructServiceImpl extends BaseServiceImpl<Instruct, Integer> impl
     /**
      *指令模糊查询
      * @param instructName  指令表中全部指令
-     * @param modelId    模板id=？的全部指令
      * @param protocolId 规约id=? 的全部指令
      * @return list<指令></>
      */
     @Override
-    public List<Instruct> findSimilar(String instructName, Integer modelId,Integer protocolId) {
+    public List<Instruct> findSimilar(String instructName,Integer protocolId) {
         List<Instruct> all = new ArrayList<>();
-        if(modelId==0&&protocolId==0){
+        if(protocolId==0){
             all = instructRepository.findAll();
-        }
-        else if(modelId==0){
+        } else{
             all = ipsService.protocolInstruct(protocolId);
-        }
-        else if(protocolId==0){
-            all = imsService.modelInstruct(modelId);
         }
         List<Instruct> similar = new ArrayList<>();
         List<Instruct> identical = new ArrayList<>();

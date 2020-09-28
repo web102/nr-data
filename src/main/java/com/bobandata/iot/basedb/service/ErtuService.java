@@ -1,8 +1,8 @@
 package com.bobandata.iot.basedb.service;
 
-import com.bobandata.iot.basedb.bean.Ertu;
-import com.bobandata.iot.basedb.bean.Meter;
-import com.bobandata.iot.basedb.bean.SimpleTree;
+import com.bobandata.iot.entity.dms.Ertu;
+import com.bobandata.iot.entity.dms.Meter;
+import com.bobandata.iot.util.SimpleTree;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

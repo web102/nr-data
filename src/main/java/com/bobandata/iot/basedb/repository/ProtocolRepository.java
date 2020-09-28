@@ -1,6 +1,6 @@
 package com.bobandata.iot.basedb.repository;
 
-import com.bobandata.iot.basedb.bean.Protocol;
+import com.bobandata.iot.entity.dms.Protocol;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,11 +22,4 @@ public interface ProtocolRepository extends BaseRepository<Protocol, Integer>{
     Page<Protocol> selectPageList(Pageable pageable);
 
     List<Protocol> findByProtocolName(String protocolName);
-
-    @Query("SELECT p FROM Protocol p where p.protocolModelId=?1")
-    List<Protocol>  findByModelId(Integer modelId);
-
-    @Modifying
-    @Query("DELETE FROM Protocol p WHERE p.protocolModelId = ?1")
-    void deleteByModelId(Integer modelId);
 }

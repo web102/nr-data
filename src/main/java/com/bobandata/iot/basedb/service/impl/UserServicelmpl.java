@@ -1,6 +1,6 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.basedb.bean.User;
+import com.bobandata.iot.entity.dms.User;
 import com.bobandata.iot.basedb.common.UserInformation;
 import com.bobandata.iot.basedb.repository.UserRepository;
 import com.bobandata.iot.basedb.service.UserService;
@@ -42,7 +42,7 @@ public class UserServicelmpl extends BaseServiceImpl<User, Integer> implements U
     public User update(String username, String password, String newPassword) {
         User user = this.findOne(UserInformation.getUserId());
         if(user!=null){
-            user.setUsername(username);
+            user.setUserName(username);
             user.setPassword(newPassword);
             return user;
         }

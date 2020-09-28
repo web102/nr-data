@@ -5,6 +5,7 @@ import com.bobandata.iot.basedb.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.io.Serializable;
 import java.util.List;
@@ -53,6 +54,11 @@ public abstract class BaseServiceImpl<M, ID extends Serializable> implements Bas
     @Override
     public List<M> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<M> findAll(Sort sort) {
+        return repository.findAll(sort);
     }
 
     @Override

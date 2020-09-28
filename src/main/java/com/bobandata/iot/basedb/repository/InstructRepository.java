@@ -1,6 +1,6 @@
 package com.bobandata.iot.basedb.repository;
 
-import com.bobandata.iot.basedb.bean.Instruct;
+import com.bobandata.iot.entity.dms.Instruct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

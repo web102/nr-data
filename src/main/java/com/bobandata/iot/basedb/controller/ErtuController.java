@@ -1,9 +1,9 @@
 package com.bobandata.iot.basedb.controller;
 
-import com.bobandata.iot.basedb.bean.Ertu;
-import com.bobandata.iot.basedb.bean.Result;
-import com.bobandata.iot.basedb.bean.SimpleTree;
-import com.bobandata.iot.basedb.common.Constant;
+import com.bobandata.iot.entity.dms.Ertu;
+import com.bobandata.iot.util.Constant;
+import com.bobandata.iot.util.Result;
+import com.bobandata.iot.util.SimpleTree;
 import com.bobandata.iot.basedb.service.ErtuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +55,7 @@ public class ErtuController {
     @ResponseBody
     public Result findAll() {
         try {
-            List<Ertu> all = ertuService.findAll();
+            List<Ertu> all = ertuService.findAll(new Sort("ertuId"));
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), all);
         } catch (Exception e) {
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);

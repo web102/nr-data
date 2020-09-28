@@ -1,7 +1,7 @@
 package com.bobandata.iot.basedb.service;
 
-import com.bobandata.iot.basedb.bean.Meter;
-import com.bobandata.iot.basedb.bean.Network;
+import com.bobandata.iot.entity.dms.Meter;
+import com.bobandata.iot.entity.dms.Network;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

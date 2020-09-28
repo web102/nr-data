@@ -1,6 +1,6 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.basedb.bean.Param_model;
+import com.bobandata.iot.entity.dms.Param_model;
 import com.bobandata.iot.basedb.repository.Param_modelRepository;
 import com.bobandata.iot.basedb.service.Param_modelService;
 import org.springframework.beans.factory.annotation.Autowired;

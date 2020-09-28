@@ -1,9 +1,9 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.basedb.bean.Meter;
+import com.bobandata.iot.entity.dms.Meter;
 
-import com.bobandata.iot.basedb.bean.Param;
-import com.bobandata.iot.basedb.bean.Pulse;
+import com.bobandata.iot.entity.dms.Param;
+import com.bobandata.iot.entity.dms.Pulse;
 import com.bobandata.iot.basedb.repository.MeterRepository;
 import com.bobandata.iot.basedb.repository.ParamRepository;
 import com.bobandata.iot.basedb.repository.PulseRepository;
@@ -29,17 +29,6 @@ public class MeterServicelmpl extends BaseServiceImpl<Meter, Integer> implements
     @Autowired
     private MeterRepository meterRepository;
 
-    @Autowired
-    private ParamRepository paramRepository;
-
-    @Autowired
-    private PulseRepository pulseRepository;
-
-    @Autowired
-    private MeterService meterService;
-
-    @Autowired
-    private PulseService pulseService;
 
     @Override
     public Page<Meter> selectPageList(Pageable pageable) {
@@ -49,13 +38,12 @@ public class MeterServicelmpl extends BaseServiceImpl<Meter, Integer> implements
 
     @Override
     public List<Meter> findMeterByErtuId(Integer ertuId) {
-        List<Meter> meters = new ArrayList<>();
+        List<Meter> meters;
 
-        List<Meter> meterAll = meterRepository.findAll();
-        for(Meter meter : meterAll){
-            if(meter.getErtuId()==ertuId){
-                meters.add(meter);
-            }
+        if(ertuId!=null) {
+            meters = meterRepository.findByErtuId(ertuId);
+        }else {
+            meters = meterRepository.findAllOrderErtu();
         }
         return meters;
     }

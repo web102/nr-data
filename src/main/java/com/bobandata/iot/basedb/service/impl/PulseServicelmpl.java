@@ -1,7 +1,7 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.basedb.bean.Param;
-import com.bobandata.iot.basedb.bean.Pulse;
+import com.bobandata.iot.entity.dms.Param;
+import com.bobandata.iot.entity.dms.Pulse;
 import com.bobandata.iot.basedb.repository.ParamRepository;
 import com.bobandata.iot.basedb.repository.PulseRepository;
 import com.bobandata.iot.basedb.service.ParamService;

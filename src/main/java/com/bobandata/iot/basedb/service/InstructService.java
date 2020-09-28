@@ -1,6 +1,6 @@
 package com.bobandata.iot.basedb.service;
 
-import com.bobandata.iot.basedb.bean.Instruct;
+import com.bobandata.iot.entity.dms.Instruct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,5 +27,5 @@ public interface InstructService extends BaseService<Instruct, Integer>{
 
     List<Instruct> findByInstructName(String instructName);
 
-    List<Instruct> findSimilar(String instructName, Integer modelId, Integer protocolId);
+    List<Instruct> findSimilar(String instructName, Integer protocolId);
 }

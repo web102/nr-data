@@ -1,6 +1,6 @@
 package com.bobandata.iot.basedb.service;
 
-import com.bobandata.iot.basedb.bean.User;
+import com.bobandata.iot.entity.dms.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

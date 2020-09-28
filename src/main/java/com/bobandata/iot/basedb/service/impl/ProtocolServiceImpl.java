@@ -1,17 +1,18 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.basedb.bean.Instruct_model;
-import com.bobandata.iot.basedb.bean.Protocol;
-import com.bobandata.iot.basedb.bean.SimpleTree;
-import com.bobandata.iot.basedb.repository.Instruct_modelRepository;
 import com.bobandata.iot.basedb.repository.ProtocolRepository;
 import com.bobandata.iot.basedb.service.ProtocolService;
+import com.bobandata.iot.entity.dms.Protocol;
+import com.bobandata.iot.util.SimpleTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -76,59 +77,47 @@ public class ProtocolServiceImpl extends BaseServiceImpl<Protocol, Integer> impl
     }
 
     @Override
-    public List<Protocol> findByModelId(Integer modelId) {
-        return protocolRepository.findByModelId(modelId);
-    }
-
-    @Override
-    public void deleteByModelId(Integer modelId) {
-        protocolRepository.deleteByModelId(modelId);
-    }
-
-    @Override
     public SimpleTree modelProtocolTree() {
         Map<String ,List<Protocol>> map =protocolSort();
         SimpleTree treeHead =new SimpleTree(0,"102规约",0,false);
-        List<SimpleTree> childrenHead =new ArrayList<>();
-        for(String title:map.keySet()){
-            SimpleTree tree =new SimpleTree(0,title,0,false);
-
-            List<SimpleTree> simpleTrees =new ArrayList<>();
-            List<Protocol> protocols= map.get(title);
-            for(Protocol protocol:protocols){
-                SimpleTree simpleTree =new SimpleTree(protocol.getProtocolId(),protocol.getProtocolName(),protocol.getProtocolModelId(),false);
-                simpleTrees.add(simpleTree);
-            }
-            tree.setChildren(simpleTrees);
-            childrenHead.add(tree);
-        }
-        treeHead.setChildren(childrenHead);
+//        List<SimpleTree> childrenHead =new ArrayList<>();
+//        for(String title:map.keySet()){
+//            SimpleTree tree =new SimpleTree(0,title,0,false);
+//
+//            List<SimpleTree> simpleTrees =new ArrayList<>();
+//            List<Protocol> protocols= map.get(title);
+//            for(Protocol protocol:protocols){
+//                SimpleTree simpleTree =new SimpleTree(protocol.getProtocolId(),protocol.getProtocolName(),protocol.getProtocolModelId(),false);
+//                simpleTrees.add(simpleTree);
+//            }
+//            tree.setChildren(simpleTrees);
+//            childrenHead.add(tree);
+//        }
+//        treeHead.setChildren(childrenHead);
         return treeHead;
     }
 
-    @Autowired
-    private Instruct_modelRepository instruct_modelRepository;
     @Override
     public Map<String, List<Protocol>> protocolSort() {
         Map<String,List<Protocol>> map =new HashMap<>();
-        List<Instruct_model> instruct_models =instruct_modelRepository.findAll();
-        for(Instruct_model instruct_model:instruct_models){
-            map.put(instruct_model.getModelName(),new ArrayList<>());
-        }
-        map.put("未配置",new ArrayList<>());
-
-        List<Protocol> protocols =protocolRepository.findAll();
-        for(Protocol protocol:protocols){
-            Instruct_model instruct_model = instruct_modelRepository.findOne(protocol.getProtocolModelId());
-            if(instruct_model==null) {
-                map.get("未配置").add(protocol);
-                continue;
-            }
-            map.get(instruct_model.getModelName()).add(protocol);
-        }
-        if(map.get("未配置").size()==0){
-            map.remove("未配置");
-        }
+//        List<Instruct_model> instruct_models =instruct_modelRepository.findAll();
+//        for(Instruct_model instruct_model:instruct_models){
+//            map.put(instruct_model.getModelName(),new ArrayList<>());
+//        }
+//        map.put("未配置",new ArrayList<>());
+//
+//        List<Protocol> protocols =protocolRepository.findAll();
+//        for(Protocol protocol:protocols){
+//            Instruct_model instruct_model = instruct_modelRepository.findOne(protocol.getProtocolModelId());
+//            if(instruct_model==null) {
+//                map.get("未配置").add(protocol);
+//                continue;
+//            }
+//            map.get(instruct_model.getModelName()).add(protocol);
+//        }
+//        if(map.get("未配置").size()==0){
+//            map.remove("未配置");
+//        }
         return map;
     }
 

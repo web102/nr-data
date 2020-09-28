@@ -1,8 +1,11 @@
 package com.bobandata.iot.basedb.controller;
 
-import com.bobandata.iot.basedb.bean.*;
-import com.bobandata.iot.basedb.common.Constant;
+import com.bobandata.iot.basedb.service.InstructProtocolSetService;
+import com.bobandata.iot.entity.dms.*;
 import com.bobandata.iot.basedb.service.ProtocolService;
+import com.bobandata.iot.util.Constant;
+import com.bobandata.iot.util.Result;
+import com.bobandata.iot.util.SimpleTree;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,9 @@ public class ProtocolController {
     @Autowired
     private ProtocolService protocolService;
 
+    @Autowired
+    private InstructProtocolSetService ipsService;
+
 
     @RequestMapping("/selectPageList")
     public Result selectPageList(int page, int size){
@@ -51,6 +57,7 @@ public class ProtocolController {
             List<Protocol> protocols = protocolService.findByProtocolName(protocolName);
             return  new Result(Constant.MethodResult.SUCCESS.getMethodResult(), protocols);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -60,6 +67,7 @@ public class ProtocolController {
             List<Protocol> protocols = protocolService.findAll();
             return  new Result(Constant.MethodResult.SUCCESS.getMethodResult(), protocols);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -83,7 +91,13 @@ public class ProtocolController {
     @RequestMapping(value = "/delete")
     @ResponseBody
     public Result deleterProtocol(Integer id) {
-        return deleteOrFind(id, Constant.MethodType.DEL.getMethodType());
+        try {
+            deleteOrFind(id, Constant.MethodType.DEL.getMethodType());
+            ipsService.deleteByProtocolId(id);
+            return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), true);
+        } catch (Exception e) {
+            return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
+        }
     }
 
     /**
@@ -113,6 +127,7 @@ public class ProtocolController {
             Map map =protocolService.protocolSort();
             return  new Result(Constant.MethodResult.SUCCESS.getMethodResult(), map);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -122,6 +137,7 @@ public class ProtocolController {
             SimpleTree tree=protocolService.modelProtocolTree();
             return  new Result(Constant.MethodResult.SUCCESS.getMethodResult(), tree);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -131,6 +147,7 @@ public class ProtocolController {
             SimpleTree tree=protocolService.protocolTree();
             return  new Result(Constant.MethodResult.SUCCESS.getMethodResult(), tree);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -141,6 +158,7 @@ public class ProtocolController {
             List<Protocol> protocols = protocolService.findSimilar(protocolName);
             return  new Result(Constant.MethodResult.SUCCESS.getMethodResult(), protocols);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }

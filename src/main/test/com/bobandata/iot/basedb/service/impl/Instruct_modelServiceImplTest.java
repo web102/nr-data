@@ -1,8 +1,8 @@
 package com.bobandata.iot.basedb.service.impl;
 
 import com.bobandata.iot.basedb.BaseApplication;
-import com.bobandata.iot.basedb.bean.Instruct_model_set;
-import com.bobandata.iot.basedb.bean.Instruct_protocol_set;
+import com.bobandata.iot.entity.dms.Instruct_model_set;
+import com.bobandata.iot.entity.dms.InstructProtocolSet;
 import com.bobandata.iot.basedb.service.Instruct_model_setService;
 import com.bobandata.iot.basedb.service.Instruct_protocol_setService;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class Instruct_modelServiceImplTest {
 //        instructIds.add(1);
 //        instructIds.add(3);
         Integer instructIds[] =new Integer[]{1,2,3};
-        List<Instruct_protocol_set> lsit =ipsService.addInstructProtocolSetData(protocolModelId,instructIds);
+        List<InstructProtocolSet> lsit =ipsService.addInstructProtocolSetData(protocolModelId,instructIds);
         System.out.println(lsit);
     }
 }

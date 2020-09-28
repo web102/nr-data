@@ -1,14 +1,10 @@
 package com.bobandata.iot.basedb.controller;
 
-import com.bobandata.iot.basedb.bean.Instruct;
-import com.bobandata.iot.basedb.bean.Instruct_model_set;
-import com.bobandata.iot.basedb.bean.Result;
-import com.bobandata.iot.basedb.common.Constant;
-import com.bobandata.iot.basedb.repository.Instruct_model_setRepository;
-import com.bobandata.iot.basedb.repository.Instruct_protocol_setRepository;
+import com.bobandata.iot.basedb.service.InstructProtocolSetService;
+import com.bobandata.iot.entity.dms.Instruct;
+import com.bobandata.iot.util.Constant;
+import com.bobandata.iot.util.Result;
 import com.bobandata.iot.basedb.service.InstructService;
-import com.bobandata.iot.basedb.service.Instruct_model_setService;
-import com.bobandata.iot.basedb.service.Instruct_protocol_setService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +36,7 @@ public class InstructController {
     private InstructService instructService;
 
     @Autowired
-    private Instruct_model_setService imsService;
-
-    @Autowired
-    private Instruct_protocol_setService ipsService;
+    private InstructProtocolSetService ipsService;
 
     @RequestMapping("/selectPageList")
     public Result selectPageList(int page, int size) {
@@ -81,6 +74,7 @@ public class InstructController {
             List<Instruct> instructs=instructService.findAll();
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(),instructs);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
 
         }
@@ -125,9 +119,9 @@ public class InstructController {
 
     @RequestMapping(value = "/findSimilar")
     @ResponseBody
-    public Result findSimilar(String instructName,Integer modelId,Integer protocolId) {
+    public Result findSimilar(String instructName,Integer protocolId) {
         try {
-            List<Instruct> instructs = instructService.findSimilar(instructName,modelId,protocolId);
+            List<Instruct> instructs = instructService.findSimilar(instructName,protocolId);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), instructs);
         } catch (Exception e) {
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
@@ -143,7 +137,6 @@ public class InstructController {
     public Result deleteOrFind(Integer id, String methodType) {
         try {
             if (methodType.equals(Constant.MethodType.DEL.getMethodType())) {
-                imsService.deleteByInstructId(id);
                 ipsService.deleteByInstructId(id);
                 instructService.delete(id);
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), true);

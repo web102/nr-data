@@ -1,6 +1,6 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.basedb.bean.Acquired;
+import com.bobandata.iot.entity.dms.Acquired;
 import com.bobandata.iot.basedb.repository.AcquiredRepository;
 import com.bobandata.iot.basedb.service.AcquiredService;
 import org.springframework.beans.factory.annotation.Autowired;

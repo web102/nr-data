@@ -1,8 +1,8 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.basedb.bean.Ertu;
-import com.bobandata.iot.basedb.bean.Meter;
-import com.bobandata.iot.basedb.bean.SimpleTree;
+import com.bobandata.iot.entity.dms.Ertu;
+import com.bobandata.iot.entity.dms.Meter;
+import com.bobandata.iot.util.SimpleTree;
 import com.bobandata.iot.basedb.repository.ErtuRepository;
 import com.bobandata.iot.basedb.repository.MeterRepository;
 import com.bobandata.iot.basedb.service.ErtuService;
@@ -70,7 +70,7 @@ public class ErtuServicelmpl extends BaseServiceImpl<Ertu, Integer> implements E
             List<SimpleTree> ertuChildren = new ArrayList<>();
             for (Meter meter : meterAll) {
                 if (meter.getErtuId() == ertu.getErtuId()) {
-                    SimpleTree meters = new SimpleTree(meter.getMeterId(), meter.getMeterName(),Integer.parseInt(meter.getMeterAddr()), false);
+                    SimpleTree meters = new SimpleTree(meter.getMeterId(), meter.getMeterName(),meter.getParamModelId(), false);
                     ertuChildren.add(meters);
                 }
             }

@@ -1,7 +1,7 @@
 package com.bobandata.iot.basedb.service;
 
-import com.bobandata.iot.basedb.bean.Protocol;
-import com.bobandata.iot.basedb.bean.SimpleTree;
+import com.bobandata.iot.entity.dms.Protocol;
+import com.bobandata.iot.util.SimpleTree;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -33,8 +33,4 @@ public interface ProtocolService extends BaseService<Protocol, Integer>{
     List<Protocol> findByProtocolName(String protocolName);
 
     List<Protocol> findSimilar(String protocolName);
-
-    List<Protocol>  findByModelId(Integer modelId);
-
-    void deleteByModelId(Integer modelId);
 }

@@ -1,7 +1,6 @@
 package com.bobandata.iot.basedb.repository;
 
-import com.bobandata.iot.basedb.bean.Ertu;
-import com.bobandata.iot.basedb.bean.Meter;
+import com.bobandata.iot.entity.dms.Ertu;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +21,4 @@ public interface ErtuRepository extends BaseRepository<Ertu, Integer> {
     Page<Ertu> selectPageList(Pageable pageable);
 
     List<Ertu> findByErtuName(String ertuName);
-
 }

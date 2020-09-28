@@ -1,10 +1,10 @@
 package com.bobandata.iot.basedb.controller;
 
-import com.bobandata.iot.basedb.bean.Instruct;
-import com.bobandata.iot.basedb.bean.Instruct_protocol_set;
-import com.bobandata.iot.basedb.bean.Result;
-import com.bobandata.iot.basedb.common.Constant;
-import com.bobandata.iot.basedb.service.Instruct_protocol_setService;
+import com.bobandata.iot.basedb.service.InstructProtocolSetService;
+import com.bobandata.iot.entity.dms.Instruct;
+import com.bobandata.iot.entity.dms.InstructProtocolSet;
+import com.bobandata.iot.util.Constant;
+import com.bobandata.iot.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,30 +27,31 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/instructProtocolSet")
-public class Instruct_protocol_setController {
+public class InstructProtocolSetController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProtocolController.class);
 
     @Autowired
-    private Instruct_protocol_setService ipsService;
+    private InstructProtocolSetService ipsService;
 
     @RequestMapping("/selectPageList")
     public Result selectPageList(int page, int size){
         Pageable pageable = new PageRequest(page, size, Sort.Direction.ASC, "id");
-        Page<Instruct_protocol_set> ipss = ipsService.selectPageList(pageable);
+        Page<InstructProtocolSet> ipss = ipsService.selectPageList(pageable);
         return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), ipss);
     }
 
     @RequestMapping(value = "/findByProtocolId")
     public Result findByProtocolId(Integer protocolId){
         try{
-            List<Instruct_protocol_set> ipss=ipsService.findByProtocolId(protocolId);
+            List<InstructProtocolSet> ipss=ipsService.findByProtocolId(protocolId);
             if(ipss.size()>0){
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), ipss);
             }
             //状态为成功，结果为false
             else return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), false);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -60,6 +61,7 @@ public class Instruct_protocol_setController {
             ipsService.deleteByProtocolIdAndInstructId(protocolId,instructId);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), true);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -71,6 +73,7 @@ public class Instruct_protocol_setController {
             ipsService.deleteByProtocolId(protocolId);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), true);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -83,6 +86,7 @@ public class Instruct_protocol_setController {
             List<Instruct> instructs = ipsService.protocolInstruct(protocolId);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), instructs);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -92,7 +96,7 @@ public class Instruct_protocol_setController {
     @ResponseBody
     public Result  addInstructProtocolSetData(Integer protocolId, Integer[] instructIds){
         try {
-            List<Instruct_protocol_set> ips =ipsService.addInstructProtocolSetData(protocolId,instructIds);
+            List<InstructProtocolSet> ips =ipsService.addInstructProtocolSetData(protocolId,instructIds);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), true);
         }catch (Exception e) {
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);

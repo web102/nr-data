@@ -1,7 +1,7 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.basedb.bean.Meter;
-import com.bobandata.iot.basedb.bean.Network;
+import com.bobandata.iot.entity.dms.Meter;
+import com.bobandata.iot.entity.dms.Network;
 import com.bobandata.iot.basedb.repository.NetworkRepository;
 import com.bobandata.iot.basedb.service.NetworkService;
 import org.springframework.beans.factory.annotation.Autowired;

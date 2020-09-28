@@ -1,12 +1,11 @@
 package com.bobandata.iot.basedb.controller;
 
-import com.bobandata.iot.basedb.bean.Meter;
-import com.bobandata.iot.basedb.bean.Param;
-import com.bobandata.iot.basedb.bean.Result;
-import com.bobandata.iot.basedb.common.Constant;
+import com.bobandata.iot.entity.dms.Param;
 import com.bobandata.iot.basedb.service.MeterService;
 import com.bobandata.iot.basedb.service.ParamService;
 import com.bobandata.iot.basedb.service.Param_model_setService;
+import com.bobandata.iot.util.Constant;
+import com.bobandata.iot.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -138,17 +136,19 @@ public class ParamController {
 
     @RequestMapping("findByMeterId")
     public Result findParamIdByMeterId(Integer meterId){
-        try{
-            Meter meter = meterService.findOne(meterId);
-            List<Integer> paramIds = pmsService.findParamIdByModelId(meter.getParamModelId());
-            List<Param> params = new ArrayList<>();
-            for(Integer paramId : paramIds){
-                Param param = paramService.findOne(paramId);
-                params.add(param);
-            }
-            return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), params);
-        }catch (Exception e){
-            return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
-        }
+//        try{
+//            Meter meter = meterService.findOne(meterId);
+//            List<Integer> paramIds = pmsService.findParamIdByModelId(meter.getParamModelId());
+//            List<Param> params = new ArrayList<>();
+//            for(Integer paramId : paramIds){
+//                Param param = paramService.findOne(paramId);
+//                params.add(param);
+//            }
+//            return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), params);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
+//        }
+        return null;
     }
 }

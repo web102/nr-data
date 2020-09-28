@@ -1,8 +1,8 @@
 package com.bobandata.iot.basedb.controller;
 
-import com.bobandata.iot.basedb.bean.Param_model;
-import com.bobandata.iot.basedb.bean.Result;
-import com.bobandata.iot.basedb.common.Constant;
+import com.bobandata.iot.entity.dms.Param_model;
+import com.bobandata.iot.util.Constant;
+import com.bobandata.iot.util.Result;
 import com.bobandata.iot.basedb.service.Param_modelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +45,7 @@ public class Param_modelController {
             List<Param_model> param_models = param_modelService.findAll();
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), param_models);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -80,6 +81,7 @@ public class Param_modelController {
             List<Param_model> paramModels= param_modelService.findSimilar(modelName);
             return  new Result(Constant.MethodResult.SUCCESS.getMethodResult(), paramModels);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }

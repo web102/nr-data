@@ -1,6 +1,6 @@
 package com.bobandata.iot.basedb.repository;
 
-import com.bobandata.iot.basedb.bean.Instruct_protocol_set;
+import com.bobandata.iot.entity.dms.InstructProtocolSet;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,25 +17,25 @@ import java.util.List;
  * @Date: Created in 16:46 2018/7/17.
  */
 @Repository
-public interface Instruct_protocol_setRepository extends BaseRepository<Instruct_protocol_set, Integer>{
+public interface InstructProtocolSetRepository extends BaseRepository<InstructProtocolSet, Integer>{
 
-    List<Instruct_protocol_set> findByProtocolId(Integer protocolId);
+    List<InstructProtocolSet> findByProtocolId(Integer protocolId);
 
-    @Query("SELECT n FROM Instruct_protocol_set n")
-    Page<Instruct_protocol_set> selectPageList(Pageable pageable);
+    @Query("SELECT n FROM InstructProtocolSet n")
+    Page<InstructProtocolSet> selectPageList(Pageable pageable);
 
-    @Query("SELECT a.instructId FROM Instruct_protocol_set a WHERE a.protocolId = ?1")
+    @Query("SELECT a.instructId FROM InstructProtocolSet a WHERE a.protocolId = ?1")
     List<Integer>findInstructIdByProtocolId(Integer protocolId);
 
     @Modifying
-    @Query("DELETE FROM Instruct_protocol_set ips WHERE ips.protocolId = ?1 AND ips.instructId = ?2")
+    @Query("DELETE FROM InstructProtocolSet ips WHERE ips.protocolId = ?1 AND ips.instructId = ?2")
     void deleteByProtocolIdAndInstructId(Integer protocolId, Integer instructId);
 
     @Modifying
-    @Query("DELETE FROM Instruct_protocol_set ips WHERE ips.protocolId=?1")
+    @Query("DELETE FROM InstructProtocolSet ips WHERE ips.protocolId=?1")
     void deleteByProtocolId(Integer protocolId);
 
     @Modifying
-    @Query("DELETE FROM Instruct_protocol_set ips WHERE ips.instructId=?1")
+    @Query("DELETE FROM InstructProtocolSet ips WHERE ips.instructId=?1")
     void deleteByInstructId(Integer instructId);
 }

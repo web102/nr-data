@@ -1,12 +1,9 @@
 package com.bobandata.iot.basedb.controller;
 
-import com.bobandata.iot.basedb.bean.*;
-import com.bobandata.iot.basedb.common.Constant;
 import com.bobandata.iot.basedb.service.AcquiredService;
-import com.bobandata.iot.basedb.service.InstructService;
-import com.bobandata.iot.basedb.service.NetworkService;
-import com.bobandata.iot.basedb.service.ProtocolService;
-import com.bobandata.iot.transport.util.HexUtils;
+import com.bobandata.iot.entity.dms.Acquired;
+import com.bobandata.iot.util.Constant;
+import com.bobandata.iot.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +32,6 @@ public class AcquiredController {
     @Autowired
     private AcquiredService acquiredService;
 
-    @Autowired
-    private NetworkService networkService;
-
-    @Autowired
-    private InstructService instructService;
-
-    @Autowired
-    private ProtocolService protocolService;
-
     @RequestMapping("/selectPageList")
     public Result selectPageList(int page, int size){
         Pageable pageable = new PageRequest(page, size, Sort.Direction.ASC, "acquiredId");
@@ -63,6 +51,7 @@ public class AcquiredController {
             List<Acquired> acquireds=acquiredService.findAll();
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), acquireds);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
 
         }
@@ -80,6 +69,7 @@ public class AcquiredController {
                 return new Result(Constant.MethodResult.FAIL.getMethodResult(), false);
             }
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -107,29 +97,10 @@ public class AcquiredController {
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(),acquired);
             }
         }catch (Exception e){
+            e.printStackTrace();
             logger.error(e.getMessage().toString());
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
-    }
-
-    /**
-     * 通过前段传递的参数，查询出指令、规约、通道，然后把查询的值赋值给任务taskaram
-     * @param taskParam
-     * @return
-     */
-    @RequestMapping(value = "/manualTask")
-    @ResponseBody
-    public Result manualTask(TaskParam taskParam){
-        Network network = networkService.findOne(taskParam.getChannelId());
-        Instruct instruct = instructService.findOne(taskParam.getInstructId());
-        Protocol protocolBean = protocolService.findOne(taskParam.getProtocolId());
-        taskParam.setIpAddress(network.getIpAddress());
-        taskParam.setIpPort(network.getIpPort());
-        taskParam.setTaskType(HexUtils.decodeHex(Integer.toHexString(instruct.getInstructPath()).toCharArray())[0]);
-//        taskParam.setTaskType(HexUtils.decodeHex(instruct.getInstructPath().toCharArray())[0]);
-        taskParam.setRestPath(protocolBean.getRestPath());
-        taskParam.setLinkAddress(protocolBean.getLinkAddress());
-        return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), taskParam);
     }
 
 }

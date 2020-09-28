@@ -1,7 +1,7 @@
 package com.bobandata.iot.basedb.repository;
 
-import com.bobandata.iot.basedb.bean.Protocol;
-import com.bobandata.iot.basedb.bean.User;
+import com.bobandata.iot.entity.dms.Protocol;
+import com.bobandata.iot.entity.dms.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -22,12 +22,12 @@ public interface UserRepository extends BaseRepository<User, Integer> {
     Page<User> selectPageList(Pageable pageable);
 
     //根据用户名查询用户
-    @Query("SELECT u FROM User u WHERE u.username = ?1")
+    @Query("SELECT u FROM User u WHERE u.userName = ?1")
     List<User> findUserByName(String username);
 
     //查询姓名为name，密码为password的用户，判断用户存不存在，
     // 存在返回true\不存在返回false
-    @Query("SELECT u FROM User u WHERE u.username = ?1 AND u.password = ?2")
+    @Query("SELECT u FROM User u WHERE u.userName = ?1 AND u.password = ?2")
     List<User> findUserByNameAndPassword(String username, String password);
 
     @Query("SELECT u FROM User u WHERE u.role = 'root'")

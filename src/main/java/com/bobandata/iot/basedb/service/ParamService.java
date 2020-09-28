@@ -1,8 +1,8 @@
 package com.bobandata.iot.basedb.service;
 
-import com.bobandata.iot.basedb.bean.Param;
-import com.bobandata.iot.basedb.bean.Protocol;
-import com.bobandata.iot.basedb.bean.Pulse;
+import com.bobandata.iot.entity.dms.Param;
+import com.bobandata.iot.entity.dms.Protocol;
+import com.bobandata.iot.entity.dms.Pulse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -2,6 +2,8 @@ package com.bobandata.iot.basedb.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public interface BaseService<M, ID extends Serializable> {
     //查询所有
     List<M> findAll();
 
+    //查询所有
+    List<M> findAll(Sort sort);
     /**
      * 分页排序获取数据
      * 禁止使用该接口进行count操作

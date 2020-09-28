@@ -1,15 +1,12 @@
 package com.bobandata.iot.basedb.controller;
 
-import com.bobandata.iot.basedb.bean.Meter;
-import com.bobandata.iot.basedb.bean.Param_model;
-import com.bobandata.iot.basedb.bean.Result;
-import com.bobandata.iot.basedb.common.Constant;
-import com.bobandata.iot.basedb.service.MeterService;
 import com.bobandata.iot.basedb.service.Param_model_setService;
+import com.bobandata.iot.entity.dms.Param_model;
+import com.bobandata.iot.util.Constant;
+import com.bobandata.iot.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +58,7 @@ public class Param_model_setConterller {
             List<Integer> paramIds = param_model_setService.findParamIdByModelId(modelId);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), paramIds);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -70,6 +68,7 @@ public class Param_model_setConterller {
             param_model_setService.deleteParamIdByModelId(modelId);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), true);
         }catch (Exception e){
+            e.printStackTrace();
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }

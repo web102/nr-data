@@ -1,7 +1,7 @@
 package com.bobandata.iot.basedb.service;
 
-import com.bobandata.iot.basedb.bean.Param_model;
-import com.bobandata.iot.basedb.bean.Param_model_set;
+import com.bobandata.iot.entity.dms.Param_model;
+import com.bobandata.iot.entity.dms.Param_model_set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

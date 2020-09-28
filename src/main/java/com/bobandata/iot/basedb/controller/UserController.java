@@ -1,8 +1,8 @@
 package com.bobandata.iot.basedb.controller;
 
-import com.bobandata.iot.basedb.bean.Result;
-import com.bobandata.iot.basedb.bean.User;
-import com.bobandata.iot.basedb.common.Constant;
+import com.bobandata.iot.util.Constant;
+import com.bobandata.iot.util.Result;
+import com.bobandata.iot.entity.dms.User;
 import com.bobandata.iot.basedb.common.UserInformation;
 import com.bobandata.iot.basedb.service.UserService;
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class UserController {
             List<User> root = userService.findRoot();
             String role = null;
             if(root.size()>0){
-                role = root.get(0).getUsername();
+                role = root.get(0).getUserName();
             }else {
                 role="root";
             }
@@ -57,7 +57,7 @@ public class UserController {
 
             user.setRole("0");
             if (user.getUserId() == null) {
-                List<User> users = userService.findByName(user.getUsername());
+                List<User> users = userService.findByName(user.getUserName());
                 if (users.size() > 0) {
                     return new Result(Constant.MethodResult.FAIL.getMethodResult(), "用户名已存在！");
                 }
