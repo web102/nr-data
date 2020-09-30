@@ -1,7 +1,6 @@
 package com.bobandata.iot.basedb.service.impl;
 
 import com.bobandata.iot.entity.dms.User;
-import com.bobandata.iot.basedb.common.UserInformation;
 import com.bobandata.iot.basedb.repository.UserRepository;
 import com.bobandata.iot.basedb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +39,12 @@ public class UserServicelmpl extends BaseServiceImpl<User, Integer> implements U
 
     @Override
     public User update(String username, String password, String newPassword) {
-        User user = this.findOne(UserInformation.getUserId());
-        if(user!=null){
+        List<User> users = userRepository.findUserByNameAndPassword(username, password);
+        if(users.size()>0){
+            User user = users.get(0);
             user.setUserName(username);
             user.setPassword(newPassword);
+            userRepository.save(users);
             return user;
         }
         return null;
@@ -52,10 +53,5 @@ public class UserServicelmpl extends BaseServiceImpl<User, Integer> implements U
     @Override
     public List<User> findByName(String username) {
         return userRepository.findUserByName(username);
-    }
-
-    @Override
-    public List<User> findRoot() {
-        return userRepository.findRoot();
     }
 }

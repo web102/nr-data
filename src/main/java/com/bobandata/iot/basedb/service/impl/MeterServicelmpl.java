@@ -1,14 +1,8 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.entity.dms.Meter;
-
-import com.bobandata.iot.entity.dms.Param;
-import com.bobandata.iot.entity.dms.Pulse;
 import com.bobandata.iot.basedb.repository.MeterRepository;
-import com.bobandata.iot.basedb.repository.ParamRepository;
-import com.bobandata.iot.basedb.repository.PulseRepository;
 import com.bobandata.iot.basedb.service.MeterService;
-import com.bobandata.iot.basedb.service.PulseService;
+import com.bobandata.iot.entity.dms.Meter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +25,11 @@ public class MeterServicelmpl extends BaseServiceImpl<Meter, Integer> implements
 
 
     @Override
+    public void deleteByErtuId(Integer ertuId) {
+        meterRepository.deleteByErtuId(ertuId);
+    }
+
+    @Override
     public Page<Meter> selectPageList(Pageable pageable) {
         return meterRepository.selectPageList(pageable);
     }
@@ -38,14 +37,7 @@ public class MeterServicelmpl extends BaseServiceImpl<Meter, Integer> implements
 
     @Override
     public List<Meter> findMeterByErtuId(Integer ertuId) {
-        List<Meter> meters;
-
-        if(ertuId!=null) {
-            meters = meterRepository.findByErtuId(ertuId);
-        }else {
-            meters = meterRepository.findAllOrderErtu();
-        }
-        return meters;
+        return meterRepository.findByErtuId(ertuId);
     }
 
 

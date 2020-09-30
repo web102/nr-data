@@ -5768,3 +5768,6 @@ undate from INSTRUCT_PROTOCOL_SET set instruct_id = 65 where id = 578 [42001-192
 2020-09-24 10:23:38 jdbc[14]: exception
 org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "UNDATE[*] INSTRUCT_PROTOCOL_SET SET INSTRUCT_ID = 65 WHERE ID = 578 "; expected "UPDATE, USE, {"; SQL statement:
 undate INSTRUCT_PROTOCOL_SET set instruct_id = 65 where id = 578 [42001-192]
+2020-09-30 11:32:58 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DELEE[*] FROM USER "; expected "DELETE, DROP, DECLARE, DEALLOCATE, {"; SQL statement:
+delee FROM USER [42001-192]

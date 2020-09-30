@@ -27,6 +27,4 @@ public interface UserService extends BaseService<User, Integer> {
     User update(String username, String password, String newPassword);
 
     List<User> findByName(String username);
-
-    List<User> findRoot();
 }

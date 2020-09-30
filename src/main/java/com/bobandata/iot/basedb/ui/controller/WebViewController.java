@@ -25,9 +25,9 @@ public class WebViewController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         WebEngine engine = this.webView.getEngine();
-        engine.load("http://localhost:9090/");
-//        URL urlHello = getClass().getResource("/static/index.html");
-//        engine.load(urlHello.toExternalForm());
+//        engine.load("http://localhost:9090");
+        URL urlHello = getClass().getResource("/static/index.html");
+        engine.load(urlHello.toExternalForm());
         this.webView.prefWidthProperty().bind(this.pane.widthProperty());
         this.webView.prefHeightProperty().bind(this.pane.heightProperty());
     }

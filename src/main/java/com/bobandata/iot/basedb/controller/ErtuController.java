@@ -1,5 +1,7 @@
 package com.bobandata.iot.basedb.controller;
 
+import com.bobandata.iot.basedb.service.MeterService;
+import com.bobandata.iot.basedb.service.NetworkService;
 import com.bobandata.iot.entity.dms.Ertu;
 import com.bobandata.iot.util.Constant;
 import com.bobandata.iot.util.Result;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -33,6 +36,12 @@ public class ErtuController {
     @Autowired
     private ErtuService ertuService;
 
+    @Autowired
+    private MeterService meterService;
+
+    @Autowired
+    private NetworkService networkService;
+
     //主键查询信息，根据id查询
     @RequestMapping("/findOne")
     public Result findOne(Integer id) {
@@ -46,6 +55,7 @@ public class ErtuController {
             List<Ertu> ertus = ertuService.findByName(ertuName);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), ertus);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -58,6 +68,7 @@ public class ErtuController {
             List<Ertu> all = ertuService.findAll(new Sort("ertuId"));
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), all);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -70,6 +81,7 @@ public class ErtuController {
             List<Ertu> similar = ertuService.findSimilar(ertuName);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), similar);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -82,6 +94,7 @@ public class ErtuController {
             SimpleTree tree = ertuService.ertuTree();
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), tree);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -94,6 +107,7 @@ public class ErtuController {
             SimpleTree tree = ertuService.ertuMeterTree(idIsNull);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), tree);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -111,6 +125,7 @@ public class ErtuController {
                 return new Result(Constant.MethodResult.FAIL.getMethodResult(), false);
             }
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -140,6 +155,8 @@ public class ErtuController {
     public Result deleteOrFind(Integer id, String methodType) {
         try {
             if (methodType.equals(Constant.MethodType.DEL.getMethodType())) {
+                meterService.deleteByErtuId(id);
+                networkService.deleteByErtuId(id);
                 ertuService.delete(id);
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), true);
             } else {
@@ -147,7 +164,8 @@ public class ErtuController {
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), ertu);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage().toString());
+            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }

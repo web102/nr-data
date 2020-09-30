@@ -19,12 +19,13 @@ import java.util.List;
 @Repository
 public interface InstructProtocolSetRepository extends BaseRepository<InstructProtocolSet, Integer>{
 
+    @Query("SELECT n FROM InstructProtocolSet n where n.protocolId = ?1 order by n.instructId")
     List<InstructProtocolSet> findByProtocolId(Integer protocolId);
 
     @Query("SELECT n FROM InstructProtocolSet n")
     Page<InstructProtocolSet> selectPageList(Pageable pageable);
 
-    @Query("SELECT a.instructId FROM InstructProtocolSet a WHERE a.protocolId = ?1")
+    @Query("SELECT a.instructId FROM InstructProtocolSet a WHERE a.protocolId = ?1 order by a.instructId")
     List<Integer>findInstructIdByProtocolId(Integer protocolId);
 
     @Modifying

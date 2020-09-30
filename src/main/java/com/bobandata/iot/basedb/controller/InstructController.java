@@ -52,7 +52,7 @@ public class InstructController {
             Instruct instruct = instructService.findOne(id);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), instruct);
         } catch (Exception e) {
-            logger.error(e.getMessage().toString());
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -64,6 +64,7 @@ public class InstructController {
             List<Instruct> instructs = instructService.findByInstructName(instructName);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), instructs);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -71,7 +72,7 @@ public class InstructController {
     @RequestMapping("/findAll")
     public Result findAll() {
         try{
-            List<Instruct> instructs=instructService.findAll();
+            List<Instruct> instructs=instructService.findAll(new Sort("instructId"));
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(),instructs);
         }catch (Exception e){
             e.printStackTrace();
@@ -92,6 +93,7 @@ public class InstructController {
                 return new Result(Constant.MethodResult.FAIL.getMethodResult(), false);
             }
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -113,6 +115,7 @@ public class InstructController {
             Map map = instructService.instructSortByType(instructService.findAll());
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), map);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -124,6 +127,7 @@ public class InstructController {
             List<Instruct> instructs = instructService.findSimilar(instructName,protocolId);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), instructs);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -145,7 +149,7 @@ public class InstructController {
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), instruct);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage().toString());
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }

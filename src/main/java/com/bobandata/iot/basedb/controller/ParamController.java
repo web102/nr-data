@@ -53,6 +53,7 @@ public class ParamController {
             List<Param> params = paramService.findAll();
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), params);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -69,6 +70,7 @@ public class ParamController {
                 return new Result(Constant.MethodResult.FAIL.getMethodResult(), false);
             }
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -89,7 +91,8 @@ public class ParamController {
             Map<Integer, List<Param>> integerListMap = paramService.paramSortByType();
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), integerListMap);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -101,6 +104,7 @@ public class ParamController {
             List<Param> params = paramService.findSimilar(paramName);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), params);
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -129,7 +133,7 @@ public class ParamController {
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), param);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage().toString());
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }

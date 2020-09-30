@@ -1,8 +1,8 @@
 package com.bobandata.iot.basedb.controller;
 
 import com.bobandata.iot.basedb.service.InstructProtocolSetService;
-import com.bobandata.iot.entity.dms.*;
 import com.bobandata.iot.basedb.service.ProtocolService;
+import com.bobandata.iot.entity.dms.Protocol;
 import com.bobandata.iot.util.Constant;
 import com.bobandata.iot.util.Result;
 import com.bobandata.iot.util.SimpleTree;
@@ -64,7 +64,7 @@ public class ProtocolController {
     @RequestMapping("/getList")
     public Result getList() {
         try{
-            List<Protocol> protocols = protocolService.findAll();
+            List<Protocol> protocols = protocolService.findAll(new Sort("protocolId"));
             return  new Result(Constant.MethodResult.SUCCESS.getMethodResult(), protocols);
         }catch (Exception e){
             e.printStackTrace();
@@ -83,6 +83,7 @@ public class ProtocolController {
                 return new Result(Constant.MethodResult.FAIL.getMethodResult(), false);
             }
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -96,6 +97,7 @@ public class ProtocolController {
             ipsService.deleteByProtocolId(id);
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), true);
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -116,7 +118,7 @@ public class ProtocolController {
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), protocol);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage().toString());
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }

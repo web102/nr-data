@@ -68,7 +68,7 @@ public class WebSocketServer {
             protocol = constructor.newInstance();
             mprotocol = protocol;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
             sendMessage(session, new WebMessage(-1, "构造规约失败！").toJson());
             return;
         }
@@ -76,7 +76,7 @@ public class WebSocketServer {
         try {
             mprotocol.init(taskParam, session);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
             sendMessage(session, new WebMessage(-1, "连接从站失败！").toJson());
             return;
         }
@@ -84,8 +84,7 @@ public class WebSocketServer {
         try {
             mprotocol.executeTask(taskParam);
         } catch (Exception e) {
-            e.printStackTrace();
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
             sendMessage(session, new WebMessage(-1, "规约执行失败").toJson());
         }
         sendMessage(session, new WebMessage(3, "连接断开!").toJson());

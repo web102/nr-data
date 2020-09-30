@@ -15,13 +15,12 @@ import java.util.List;
  */
 public interface NetworkService extends BaseService<Network, Integer> {
 
-    /**
-     * 分页查询
-     * @param pageable 分页参数
-     * @return
-     */
+    void deleteByErtuId(Integer ertuId);
+
     Page<Network> selectPageList(Pageable pageable);
 
     List<Network> findNetworkByErtuId(Integer ertuId);
+
+
 
 }

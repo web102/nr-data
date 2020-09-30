@@ -44,7 +44,7 @@ public class MeterController {
     @RequestMapping("/findAll")
     public Result findAll() {
         try{
-            List<Meter> meters = meterService.findAll();
+            List<Meter> meters = meterService.findAll(new Sort("ertuId","meterNo"));
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), meters);
         }catch (Exception e){
             e.printStackTrace();

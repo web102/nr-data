@@ -62,6 +62,7 @@ public class Param_modelController {
                 return new Result(Constant.MethodResult.FAIL.getMethodResult(), false);
             }
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
@@ -110,7 +111,7 @@ public class Param_modelController {
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), param_model);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage().toString());
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }

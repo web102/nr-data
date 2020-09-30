@@ -15,11 +15,8 @@ import java.util.List;
  */
 public interface MeterService extends BaseService<Meter, Integer>{
 
-    /**
-     * 分页查询
-     * @param pageable 分页参数
-     * @return
-     */
+    void deleteByErtuId(Integer ertuId);
+
     Page<Meter> selectPageList(Pageable pageable);
 
     List<Meter> findMeterByErtuId(Integer ertuId);

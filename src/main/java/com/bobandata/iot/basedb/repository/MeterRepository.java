@@ -3,9 +3,11 @@ package com.bobandata.iot.basedb.repository;
 import com.bobandata.iot.entity.dms.Meter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -25,4 +27,9 @@ public interface MeterRepository extends BaseRepository<Meter, Integer> {
 
     @Query("SELECT m FROM Meter m where m.ertuId = ?1 ORDER BY m.meterNo")
     List<Meter> findByErtuId(Integer ertuId);
+
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Meter m where m.ertuId=?1")
+    void deleteByErtuId(Integer ertuId);
 }

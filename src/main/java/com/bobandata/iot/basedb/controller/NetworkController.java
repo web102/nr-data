@@ -50,15 +50,16 @@ public class NetworkController {
                 return new Result(Constant.MethodResult.FAIL.getMethodResult(), false);
             }
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }
 
     //查询所有
     @RequestMapping("/findAll")
-    public Result findAll(Integer id) {
+    public Result findAll() {
         try{
-            List<Network> meters = networkService.findAll();
+            List<Network> meters = networkService.findAll(new Sort("ertuId","channelId"));
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), meters);
         }catch (Exception e){
             e.printStackTrace();
@@ -109,7 +110,7 @@ public class NetworkController {
                 return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), network);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage().toString());
+            logger.error(e.getMessage(),e);
             return new Result(Constant.ErrorCode.EXCEPTION.getErrorCode(), Constant.MethodResult.FAIL.getMethodResult(), Constant.ResultType.B00.getResultType(), false);
         }
     }

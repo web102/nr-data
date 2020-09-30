@@ -34,12 +34,12 @@ public class ProtocolServiceImpl extends BaseServiceImpl<Protocol, Integer> impl
 
     @Override
     public SimpleTree protocolTree() {
-        SimpleTree treeHead =new SimpleTree(0,"规约",0,false);
+        SimpleTree treeHead =new SimpleTree(0,"规约",0);
         List<SimpleTree> childrenHead =new ArrayList<>();
         treeHead.setChildren(childrenHead);
         List<Protocol> protocols = this.findAll();
         for(Protocol protocol : protocols){
-            SimpleTree tree =new SimpleTree(protocol.getProtocolId(),protocol.getProtocolName(),0,false);
+            SimpleTree tree =new SimpleTree(protocol.getProtocolId(),protocol.getProtocolName(),0);
             childrenHead.add(tree);
         }
         return treeHead;
@@ -79,7 +79,7 @@ public class ProtocolServiceImpl extends BaseServiceImpl<Protocol, Integer> impl
     @Override
     public SimpleTree modelProtocolTree() {
         Map<String ,List<Protocol>> map =protocolSort();
-        SimpleTree treeHead =new SimpleTree(0,"102规约",0,false);
+        SimpleTree treeHead =new SimpleTree(0,"102规约",0);
 //        List<SimpleTree> childrenHead =new ArrayList<>();
 //        for(String title:map.keySet()){
 //            SimpleTree tree =new SimpleTree(0,title,0,false);

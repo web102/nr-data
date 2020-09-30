@@ -29,10 +29,4 @@ public interface UserRepository extends BaseRepository<User, Integer> {
     // 存在返回true\不存在返回false
     @Query("SELECT u FROM User u WHERE u.userName = ?1 AND u.password = ?2")
     List<User> findUserByNameAndPassword(String username, String password);
-
-    @Query("SELECT u FROM User u WHERE u.role = 'root'")
-    List<User> findRoot();
-
-
-
 }

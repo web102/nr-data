@@ -5,6 +5,8 @@ import com.bobandata.iot.util.Result;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +28,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/pdf")
 public class PDFReport {
-
+    private static final Logger logger = LoggerFactory.getLogger(PDFReport.class);
 
     @RequestMapping("/pdfReport")
     public Result pdfReport(@RequestParam("msg[]") String[] msg) throws IOException {
@@ -51,7 +53,7 @@ public class PDFReport {
             PdfWriter.getInstance(document, new FileOutputStream(file));
             document.open();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
         }
 
 

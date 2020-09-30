@@ -9,6 +9,7 @@ import com.bobandata.iot.basedb.service.ErtuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,12 +43,12 @@ public class ErtuServicelmpl extends BaseServiceImpl<Ertu, Integer> implements E
 
     @Override
     public SimpleTree ertuTree() {
-        SimpleTree tree = new SimpleTree(0,"tree",false);
+        SimpleTree tree = new SimpleTree(0,"tree");
         List<SimpleTree> children = new ArrayList<>();
 
-        List<Ertu> all = ertuRepository.findAll();
+        List<Ertu> all = ertuRepository.findAll(new Sort("ertuId"));
         for(Ertu ertu : all){
-            SimpleTree ertus = new SimpleTree(ertu.getErtuId(),ertu.getErtuName(),false);
+            SimpleTree ertus = new SimpleTree(ertu.getErtuId(),ertu.getErtuName());
             children.add(ertus);
         }
         tree.setChildren(children);
@@ -56,21 +57,21 @@ public class ErtuServicelmpl extends BaseServiceImpl<Ertu, Integer> implements E
 
     @Override
     public SimpleTree ertuMeterTree(Boolean idIsNull) {
-        SimpleTree tree = new SimpleTree(0,"tree",false);
+        SimpleTree tree = new SimpleTree(0,"tree");
         List<SimpleTree> children = new ArrayList<>();
 
-        List<Ertu> ertuAll = ertuRepository.findAll();
+        List<Ertu> ertuAll = ertuRepository.findAll(new Sort("ertuId"));
         List<Meter> meterAll = meterRepository.findAll();
         for(Ertu ertu : ertuAll){
             Integer ertuId = ertu.getErtuId();
             if(idIsNull) {
                 ertuId = 0;
             }
-            SimpleTree ertus = new SimpleTree(ertuId,ertu.getErtuName(),ertu.getProtocolId(),false);
+            SimpleTree ertus = new SimpleTree(ertuId,ertu.getErtuName(),ertu.getProtocolId());
             List<SimpleTree> ertuChildren = new ArrayList<>();
             for (Meter meter : meterAll) {
-                if (meter.getErtuId() == ertu.getErtuId()) {
-                    SimpleTree meters = new SimpleTree(meter.getMeterId(), meter.getMeterName(),meter.getParamModelId(), false);
+                if (meter.getErtuId().equals(ertu.getErtuId())) {
+                    SimpleTree meters = new SimpleTree(meter.getMeterId(), meter.getMeterName(),meter.getParamModelId(),meter.getErtuId());
                     ertuChildren.add(meters);
                 }
             }
