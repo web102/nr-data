@@ -69,7 +69,7 @@ public class WebSocketServer {
             mprotocol = protocol;
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
-            sendMessage(session, new WebMessage(-1, "构造规约失败！").toJson());
+            sendMessage(session, new WebMessage(WebMessage.Code.ERROR, "构造规约失败！").toJson());
             return;
         }
 
@@ -77,7 +77,7 @@ public class WebSocketServer {
             mprotocol.init(taskParam, session);
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
-            sendMessage(session, new WebMessage(-1, "连接从站失败！").toJson());
+            sendMessage(session, new WebMessage(WebMessage.Code.ERROR, "连接从站失败！").toJson());
             return;
         }
 
@@ -85,11 +85,10 @@ public class WebSocketServer {
             mprotocol.executeTask(taskParam);
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
-            sendMessage(session, new WebMessage(-1, "规约执行失败").toJson());
+            sendMessage(session, new WebMessage(WebMessage.Code.ERROR, "规约执行失败").toJson());
         }
-        sendMessage(session, new WebMessage(3, "连接断开!").toJson());
+        sendMessage(session, new WebMessage(WebMessage.Code.CLOSE, "连接断开!").toJson());
         session.close();
-        System.out.println(session.isOpen());
     }
 
 
