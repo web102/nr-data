@@ -1,11 +1,11 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.entity.dms.Ertu;
-import com.bobandata.iot.entity.dms.Meter;
-import com.bobandata.iot.util.SimpleTree;
 import com.bobandata.iot.basedb.repository.ErtuRepository;
 import com.bobandata.iot.basedb.repository.MeterRepository;
 import com.bobandata.iot.basedb.service.ErtuService;
+import com.bobandata.iot.entity.dms.Ertu;
+import com.bobandata.iot.entity.dms.Meter;
+import com.bobandata.iot.util.SimpleTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,24 +56,19 @@ public class ErtuServicelmpl extends BaseServiceImpl<Ertu, Integer> implements E
     }
 
     @Override
-    public SimpleTree ertuMeterTree(Boolean idIsNull) {
+    public SimpleTree ertuMeterTree() {
         SimpleTree tree = new SimpleTree(0,"tree");
         List<SimpleTree> children = new ArrayList<>();
 
         List<Ertu> ertuAll = ertuRepository.findAll(new Sort("ertuId"));
-        List<Meter> meterAll = meterRepository.findAll();
         for(Ertu ertu : ertuAll){
             Integer ertuId = ertu.getErtuId();
-            if(idIsNull) {
-                ertuId = 0;
-            }
             SimpleTree ertus = new SimpleTree(ertuId,ertu.getErtuName(),ertu.getProtocolId());
             List<SimpleTree> ertuChildren = new ArrayList<>();
-            for (Meter meter : meterAll) {
-                if (meter.getErtuId().equals(ertu.getErtuId())) {
-                    SimpleTree meters = new SimpleTree(meter.getMeterId(), meter.getMeterName(),meter.getParamModelId(),meter.getErtuId());
-                    ertuChildren.add(meters);
-                }
+            List<Meter> meters = meterRepository.findByErtuId(ertuId);
+            for (Meter meter : meters) {
+                SimpleTree metersT = new SimpleTree(meter.getMeterId(), meter.getMeterName(), meter.getParamModelId(), meter.getErtuId());
+                ertuChildren.add(metersT);
             }
             ertus.setChildren(ertuChildren);
             children.add(ertus);

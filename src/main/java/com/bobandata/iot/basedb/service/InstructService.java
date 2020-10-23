@@ -28,4 +28,6 @@ public interface InstructService extends BaseService<Instruct, Integer>{
     List<Instruct> findByInstructName(String instructName);
 
     List<Instruct> findSimilar(String instructName, Integer protocolId);
+
+    List<Instruct> findByInstructIds(List<Integer> ids);
 }

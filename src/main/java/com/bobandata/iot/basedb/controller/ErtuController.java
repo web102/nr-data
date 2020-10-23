@@ -102,9 +102,9 @@ public class ErtuController {
     //终端电表树接口
     @RequestMapping("/ertuMeterTree")
     @ResponseBody
-    public Result ertuMeterTree(Boolean idIsNull) {
+    public Result ertuMeterTree() {
         try {
-            SimpleTree tree = ertuService.ertuMeterTree(idIsNull);
+            SimpleTree tree = ertuService.ertuMeterTree();
             return new Result(Constant.MethodResult.SUCCESS.getMethodResult(), tree);
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
@@ -116,7 +116,7 @@ public class ErtuController {
     //保存记录：不带ID是新增，带ID是更新
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result addAcquired(Ertu ertu) {
+    public Result addErtu(Ertu ertu) {
         try {
             Ertu p = ertuService.save(ertu);
             if (p != null) {

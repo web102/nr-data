@@ -29,5 +29,5 @@ public interface ErtuService extends BaseService<Ertu, Integer> {
 
     SimpleTree ertuTree();
 
-    SimpleTree ertuMeterTree(Boolean idIsNull);
+    SimpleTree ertuMeterTree();
 }

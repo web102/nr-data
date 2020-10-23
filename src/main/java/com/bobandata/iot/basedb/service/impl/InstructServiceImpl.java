@@ -1,18 +1,15 @@
 package com.bobandata.iot.basedb.service.impl;
 
-import com.bobandata.iot.entity.dms.Instruct;
 import com.bobandata.iot.basedb.repository.InstructRepository;
-import com.bobandata.iot.basedb.service.InstructService;
 import com.bobandata.iot.basedb.service.InstructProtocolSetService;
+import com.bobandata.iot.basedb.service.InstructService;
+import com.bobandata.iot.entity.dms.Instruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -40,14 +37,21 @@ public class InstructServiceImpl extends BaseServiceImpl<Instruct, Integer> impl
      */
     @Override
     public Map<String,List<Instruct>> instructSortByType(List<Instruct> instructs){
-        Map<String,List<Instruct>> map = new HashMap();
+        Map<String,List<Instruct>> map = new HashMap<>();
 
         List<Instruct> instructTypes = instructRepository.findAllInstructTypes();
         for(Instruct instructType:instructTypes) {
-            map.put(instructType.getInstructType(), new ArrayList());
+            map.computeIfAbsent(instructType.getInstructType(), k -> new ArrayList<>());
+            map.get(instructType.getInstructType()).add(instructType);
         }
-        for(Instruct instruct:instructs) {
-            map.get(instruct.getInstructType()).add(instruct);
+
+        for (Map.Entry<String,List<Instruct>> entry : map.entrySet()){
+            entry.getValue().sort(new Comparator<Instruct>() {
+                @Override
+                public int compare(Instruct o1, Instruct o2) {
+                    return o1.getInstructPath().compareTo(o2.getInstructPath());
+                }
+            });
         }
         return map;
     }
@@ -60,7 +64,7 @@ public class InstructServiceImpl extends BaseServiceImpl<Instruct, Integer> impl
      */
     @Override
     public List<Instruct> findSimilar(String instructName,Integer protocolId) {
-        List<Instruct> all = new ArrayList<>();
+        List<Instruct> all;
         if(protocolId==0){
             all = instructRepository.findAll();
         } else{
@@ -77,7 +81,7 @@ public class InstructServiceImpl extends BaseServiceImpl<Instruct, Integer> impl
             else if(instruct.getInstructName().startsWith(instructName)){
                 start.add(instruct);
             }
-            else if(instruct.getInstructName().indexOf(instructName)!=-1){
+            else if(instruct.getInstructName().contains(instructName)){
                 indexOf.add(instruct);
             }
         }
@@ -85,6 +89,11 @@ public class InstructServiceImpl extends BaseServiceImpl<Instruct, Integer> impl
         similar.addAll(start);
         similar.addAll(indexOf);
         return similar;
+    }
+
+    @Override
+    public List<Instruct> findByInstructIds(List<Integer> ids) {
+        return instructRepository.findByInstructIds(ids);
     }
 
     @Override

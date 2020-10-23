@@ -23,4 +23,7 @@ public interface InstructRepository extends BaseRepository<Instruct,Integer>{
     List<Instruct> findAllInstructTypes();
 
     List<Instruct> findByInstructName(String instructName);
+
+    @Query("SELECT i FROM Instruct i where i.instructId in (?1) order by i.instructPath")
+    List<Instruct> findByInstructIds(List<Integer> ids);
 }

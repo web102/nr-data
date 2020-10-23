@@ -36,13 +36,8 @@ public class InstructProtocolSetServiceImpl extends BaseServiceImpl<InstructProt
     private InstructService instructService;
     @Override
     public List<Instruct> protocolInstruct(Integer protocolId) {
-        List<Instruct> instructs = new ArrayList<>();
         List<Integer> instructIds =ipsRepository.findInstructIdByProtocolId(protocolId);
-        for(Integer instructId:instructIds){
-            Instruct instruct =instructService.findOne(instructId);
-            instructs.add(instruct);
-        }
-        return instructs;
+        return instructService.findByInstructIds(instructIds);
     }
 
     @Autowired
