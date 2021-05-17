@@ -1,6 +1,6 @@
 #FileLock
-#Wed Nov 04 14:38:23 CST 2020
-hostName=lizhipneg.lan
-id=17591fa4ce03f810795d6b459ce87d802a80d2be395
+#Mon May 17 15:42:42 CST 2021
+hostName=lizhipneg
+id=1797946e79e99fac857c49acaa594fce64cd7fcfea7
 method=file
-server=192.168.2.178\:58968
+server=192.168.3.74\:55339

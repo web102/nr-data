@@ -30,9 +30,7 @@ public class WebSocketServer2 {
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
 
-    private LinkedBlockingQueue<Session> queue = new LinkedBlockingQueue(10);
-
-    private static IAsynProtocol mprotocol;
+    private LinkedBlockingQueue<Session> queue = new LinkedBlockingQueue<>(10);
 
     /**
      * 连接建立成功调用的方法
@@ -65,6 +63,7 @@ public class WebSocketServer2 {
      */
     @OnMessage
     public void onMessage(String message, Session webSession) throws IOException {
+        IAsynProtocol mprotocol;
         WebParam webParam = JSONObject.parseObject(message, WebParam.class);
         IoSession session = null;
         try {
@@ -98,7 +97,7 @@ public class WebSocketServer2 {
         }
 
         try {
-            SocketConnector connector;
+            NioSocketConnector connector;
             ConnectFuture future;
 
             connector = new NioSocketConnector();
